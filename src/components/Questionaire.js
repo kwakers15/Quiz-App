@@ -1,43 +1,51 @@
 import React from "react"
 
-const Button = ({ answer, className }) => (
-    <button
-        className={`bg-white p-4 text-purple-800 font-semibold rounded shadow ${className}`}>
-        {answer}
-    </button>
-);
-
 const Questionaire = ({
+    showAnswers,
     handleAnswer,
-    data: { question, correct_answer, incorrect_answers },
+    handleNextQuestion,
+    data: { question, correct_answer, answers },
 }) => {
-    const shuffledAnswer = [correct_answer, ...incorrect_answers].sort(
-        () => Math.random() - 0.5
-    );
 
     return (
-        <div>
+        <div className='flex flex-col'>
             <div className="bg-white text-purple-800 p-10 rounded -lg shadow-md">
                 <h2
                     className="text-2xl" dangerouslySetInnerHTML={{ __html: question }}
                 />
             </div>
             <div className="grid grid-cols-2 gap-6 mt-6">
-                <Button
-                    className={correct_answer === shuffledAnswer[0] ? 'bg-purple-300' : ''} onClick={() => handleAnswer(shuffledAnswer[0])} answer={shuffledAnswer[0]}
-                />
-                <Button
-                    className={correct_answer === shuffledAnswer[1] ? 'bg-purple-300' : ''} onClick={() => handleAnswer(shuffledAnswer[1])} answer={shuffledAnswer[1]}
-                />
-                <Button
-                    className={correct_answer === shuffledAnswer[2] ? 'bg-purple-300' : ''} onClick={() => handleAnswer(shuffledAnswer[2])} answer={shuffledAnswer[2]}
-                />
-                <Button
-                    className={correct_answer === shuffledAnswer[3] ? 'bg-purple-300' : ''} onClick={() => handleAnswer(shuffledAnswer[3])} answer={shuffledAnswer[3]}
-                />
+                {answers.map((answer, idx) => {
+                    const textColor = showAnswers
+                        ? answer === correct_answer
+                            ? 'text-green-500'
+                            : 'text-red-500'
+                        : 'text-purple-700';
+                    // const textColor = showAnswers ? 'text-white' : 'text-purple-800';
+                    return (
+                        <button
+                            key={idx}
+                            className={`bg-white ${textColor} p-4 font-semibold rounded shadow`}
+                            onClick={() => handleAnswer(answer)}
+                            dangerouslySetInnerHTML={{
+                                __html: answer
+                            }}
+                        />
+                    )
+                })}
             </div>
-        </div>
-    )
+            {showAnswers && (
+                <button
+                    onClick={handleNextQuestion}
+                    className={`mt-6 ml-auto bg-purple-700 
+                    text-white p-4 font-semibold 
+                    rounded shadow`}>
+                    Next Question
+                </button>
+            )
+            }
+        </div >
+    );
 };
 
 export default Questionaire;
