@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react"
 
-import { Questionaire } from './components';
+import Questionaire from './components/Questionaire';
 const API_URL_SPORTS =
   'https://opentdb.com/api.php?amount=10&category=21&difficulty=medium&type=multiple';
 
 const API_URL_MATH =
-  'https://opentdb.com/api.php?amount=10&category=19&difficulty=hard&type=multiple';
+  'https://opentdb.com/api.php?amount=10&category=19&difficulty=medium&type=multiple';
 
 function App() {
   const [questions, setQuestions] = useState([]);

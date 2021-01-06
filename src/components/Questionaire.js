@@ -21,7 +21,6 @@ const Questionaire = ({
                             ? 'text-green-500'
                             : 'text-red-500'
                         : 'text-purple-700';
-                    // const textColor = showAnswers ? 'text-white' : 'text-purple-800';
                     return (
                         <button
                             key={idx}
